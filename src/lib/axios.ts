@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_FAVORITE_PRODUCTS_API_URL,
@@ -23,7 +23,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      // Remove o token se quiser: ex: deleteCookie('token')
+      deleteCookie('token')
       window.location.href = '/entrar'
     }
 
