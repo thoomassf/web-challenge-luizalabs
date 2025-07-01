@@ -5,9 +5,7 @@ import { TabsContent } from "./ui/tabs";
 import { Badge } from "./ui/badge";
 import type { Product } from "@/types/Product";
 import Image from "next/image";
-import { PostAddProductToList } from "@/http/favoriteProducts/post-add-product-to-list";
-import { useQueryClient } from "@tanstack/react-query";
-import { toast } from "sonner";
+import useListControl from "@/hooks/useListControl";
 
 interface CatalogProductsProps {
   products: Product[]
@@ -16,22 +14,7 @@ interface CatalogProductsProps {
 }
 
 export function ProductsCatalog({ products, favoriteProducts, favoriteProductsListId }: CatalogProductsProps) {
-  const queryClient = useQueryClient()
-
-  async function handleFavoriteProduct(productId: string) {
-    try {
-      await PostAddProductToList({
-        id: favoriteProductsListId,
-        product_id: productId
-      })
-
-      toast.error("Produto adicionado aos favoritos")
-      queryClient.invalidateQueries({ queryKey: ['favorite-list'] })
-    } catch (err) {
-      console.log(err)
-      toast.error("Não foi possível adicionar o produto aos favoritos")
-    }
-  }
+  const { handleFavoriteProduct, handleRemoveProduct } = useListControl({ favoriteProductsListId })
 
   return (
     <TabsContent value="catalog">
@@ -50,7 +33,13 @@ export function ProductsCatalog({ products, favoriteProducts, favoriteProductsLi
                 size="sm"
                 variant={favoriteProducts.includes(String(product.id)) ? "default" : "outline"}
                 className="absolute top-2 right-2"
-                onClick={() => handleFavoriteProduct(String(product.id))}
+                onClick={() => {
+                  if (favoriteProducts.includes(String(product.id))) {
+                    handleRemoveProduct(String(product.id))
+                  } else {
+                    handleFavoriteProduct(String(product.id))
+                  }
+                }}
               >
                 <Heart className={`h-4 w-4 ${favoriteProducts.includes(String(product.id)) ? "fill-current" : ""}`} />
               </Button>

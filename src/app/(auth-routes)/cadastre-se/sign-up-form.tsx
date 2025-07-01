@@ -180,7 +180,7 @@ export default function SignUpForm() {
             <div className="text-center">
               <p className="text-sm text-gray-600">
                 Já tem uma conta?{" "}
-                <Link href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+                <Link href="/entrar" className="text-blue-600 hover:text-blue-800 font-medium">
                   Fazer login
                 </Link>
               </p>

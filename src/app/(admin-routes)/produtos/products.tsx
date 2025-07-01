@@ -32,13 +32,10 @@ export default function Products() {
     return <p>Carregando...</p>
   }
   
-  const currentFavoriteProducts = () => {
-    if (favoritesList?.favoriteProducts) {
-      products?.filter((product) => favoritesList?.favoriteProducts?.product_ids.includes(String(product.id)))
-    } else {
-      return 0
-    }
-  }
+  const currentFavoriteProducts = products?.filter((product) => favoritesList?.favoriteProducts?.product_ids.includes(String(product.id)))
+    
+
+  console.log(currentFavoriteProducts)
 
   function handleLogout() {
     deleteCookie("token")

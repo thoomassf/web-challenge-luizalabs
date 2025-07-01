@@ -4,9 +4,9 @@
 ### 📥 Clone o projeto
 
 ```bash
-git clone https://github.com/thoomassf/daily-diet-api.git && cd daily-diet-api
+git clone https://github.com/thoomassf/web-challenge-luizalabs.git && cd web-challenge-luizalabs
 # ou
-gh repo clone thoomassf/daily-diet-api && cd daily-diet-api
+gh repo clone thoomassf/web-challenge-luizalabs && cd web-challenge-luizalabs
 ```
 
 ### ⚙️ Instalação das dependências
@@ -17,7 +17,7 @@ npm install
 ### 🔐 Configuração do ambiente
 Crie o arquivo .env.local com base no .env.example:
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 Edite suas variáveis de ambiente conforme necessário.
 

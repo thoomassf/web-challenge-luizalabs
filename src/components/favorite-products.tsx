@@ -5,8 +5,7 @@ import { TabsContent } from "./ui/tabs";
 import { Badge } from "./ui/badge";
 import type { Product } from "@/types/Product";
 import Image from "next/image";
-import { useQueryClient } from "@tanstack/react-query";
-import { PostRemoveProductToList } from "@/http/favoriteProducts/post-remove-product-to-list";
+import useListControl from "@/hooks/useListControl";
 
 interface FavoriteProductsProps {
   favoriteProducts: Product[]
@@ -14,27 +13,15 @@ interface FavoriteProductsProps {
 }
 
 export function FavoriteProducts({ favoriteProducts, favoriteProductsListId }: FavoriteProductsProps) {
-  const queryClient = useQueryClient()
+  const { handleRemoveProduct } = useListControl({ favoriteProductsListId })
 
-  async function handleRemoveProduct(productId: string) {
-    try {
-      await PostRemoveProductToList({
-        id: favoriteProductsListId,
-        product_id: productId
-      })
-
-      queryClient.invalidateQueries({ queryKey: ['favorite-list'] })
-    } catch (err) {
-      console.log(err)
-    }
-  }
   return (
     <TabsContent value="favorites">
       {favoriteProducts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {favoriteProducts.map((product) => (
             <Card key={product.id} className="overflow-hidden">
-              <div className="aspect-square relative">
+              <div className="aspect-square relative flex items-center justify-center">
                 <Image
                   src={product.image || "/placeholder.svg"}
                   alt={product.title}
